@@ -5,3 +5,8 @@
 .precomp
 lib/.precomp
 
+# OS X files
+**/.DS_Store
+
+# AOC input files
+*.txt
