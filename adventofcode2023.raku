@@ -1,8 +1,9 @@
 use v6;
 use lib "src";
 use util;
+use Day01;
 
-constant $max_day = -1;
+constant $max_day = 1;
 
 # This will not generate usage on error in Windows, but anyway...
 sub MAIN(	
@@ -31,7 +32,7 @@ sub MAIN(
 	say	"Running Day $day with input file $file\n";
     my $start = now;
     given $day {
-		#when 1 { day01(@file_lines) }
+		when 1 { day01(@file_lines) }
         default { say "Day $day not available" }
 	}
     my $elapsed = (now - $start) * 1000;
