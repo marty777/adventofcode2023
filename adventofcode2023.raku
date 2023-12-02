@@ -2,13 +2,14 @@ use v6;
 use lib "src";
 use util;
 use Day01;
+use Day02;
 
-constant $max_day = 1;
+constant $max_day = 2;
 
 # This will not generate usage on error in Windows, but anyway...
 sub MAIN(	
 		Int		$day, 		#= the puzzle day to run
-		Str 	$file, 	#= the input file to run
+		Str 	$file, 		#= the input file to run
 		) {
 	
 	if $day <= 0 or $day > $max_day {
@@ -28,12 +29,13 @@ sub MAIN(
 		say "Input file $file is empty";
 		return;
 	}
-    print_logo();
+	print_logo();
 	say	"Running Day $day with input file $file\n";
     my $start = now;
     given $day {
 		when 1 { day01(@file_lines) }
-        default { say "Day $day not available" }
+		when 2 { day02(@file_lines) }
+		default { say "Day $day not available" }
 	}
     my $elapsed = (now - $start) * 1000;
     say "\nElapsed: $elapsed ms";
