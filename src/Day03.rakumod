@@ -40,10 +40,7 @@ sub symbolScan(@lines) {
 
 sub adjacent($number, $symbol) {
 	if $symbol[1] < $number[1] - 1 || $symbol[1] > $number[1] + 1 { return False; }
-	if $symbol[0] >= $number[0]-1 && $symbol[0] <= $number[0] + $number[2] {
-		return True;
-	}
-	return False;
+	return ($symbol[0] >= $number[0]-1 && $symbol[0] <= $number[0] + $number[2]);
 }
 
 sub day03(@lines) is export {
