@@ -3,8 +3,7 @@ use util;
 
 sub day02(@lines) is export {
 	my $part1 = 0;
-    my $part2 = 0;
-    
+	my $part2 = 0;
 	my %max = %{'red' => 12, 'green' => 13, 'blue' => 14};
 	for @lines -> $line {
 		my @split = $line.split(":");
@@ -34,9 +33,7 @@ sub day02(@lines) is export {
 			$part1 += $id;
 		}
 		$part2 += %greatests{'red'} * %greatests{'green'} * %greatests{'blue'};
-    }
+	}
 	say "Part 1: $part1";
-	say "Part 1: $part2";
+	say "Part 2: $part2";
 }
-
- 

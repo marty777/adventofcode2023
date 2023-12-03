@@ -3,8 +3,9 @@ use lib "src";
 use util;
 use Day01;
 use Day02;
+use Day03;
 
-constant $max_day = 2;
+constant $max_day = 3;
 
 # This will not generate usage on error in Windows, but anyway...
 sub MAIN(	
@@ -31,12 +32,13 @@ sub MAIN(
 	}
 	print_logo();
 	say	"Running Day $day with input file $file\n";
-    my $start = now;
-    given $day {
+	my $start = now;
+	given $day {
 		when 1 { day01(@file_lines) }
 		when 2 { day02(@file_lines) }
+		when 3 { day03(@file_lines) }
 		default { say "Day $day not available" }
 	}
-    my $elapsed = (now - $start) * 1000;
-    say "\nElapsed: $elapsed ms";
+	my $elapsed = (now - $start) * 1000;
+	say "\nElapsed: $elapsed ms";
 }

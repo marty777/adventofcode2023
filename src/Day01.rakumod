@@ -33,7 +33,7 @@ sub digitscan($str, $part2) {
 	}
 	# find last digit appearance in string
 	$found = False;
-	loop (my $i = $str.chars - 1; $i >= 0 && !$found; $i--) {
+	loop ($i = $str.chars - 1; $i >= 0 && !$found; $i--) {
 		if $part2 {
 			for %replacements.kv -> $key, $value {
 				if $i + $key.chars <= $str.chars && substr($str, $i, $key.chars) eq $key {

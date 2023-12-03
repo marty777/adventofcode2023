@@ -3,10 +3,10 @@
 
 ## Usage
 
-    adventofcode2023.raku <day> <file>
-    
-        <day>     the puzzle day to run
-        <file>    the input file to run
+	adventofcode2023.raku <day> <file>
+
+		<day>	the puzzle day to run
+		<file>	the input file to run
 
 ## Example
 
