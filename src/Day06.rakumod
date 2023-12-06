@@ -1,7 +1,6 @@
 unit module Day06;
 use util;
 
-
 # Brute forcing the naive version of this solved part 2 before I had a chance
 # to think about it, but the problem has a closed form.
 # f(x) = -x^2 + x * $time - $distance
@@ -9,27 +8,27 @@ use util;
 # f(x) is a quadratic function with x intercepts. The number of integer x 
 # values where f(x) > 0 between these intercepts is the number of wins
 # The solutions for 0 = f(x) = ax^2 + bx + c are:
-# x = (-b +/- sqrt(b^2 - 4ac))/2a
+# 	x = (-b +/- sqrt(b^2 - 4ac))/2a
 # where:
-# a = -1
-# b = time
-# c = -distance
+# 	a = -1
+# 	b = time
+# 	c = -distance
 # and b^2 - 4ac  = time^2 - 4*distance is the discriminant.
-# Thus, with some algebraic simplification: 
-#	x_high,x_low = time +/- sqrt(discriminant)/2
+# Thus, with some algebraic simplification, the x intercepts of f(x) are: 
+# 	low,high = (time -/+ sqrt(discriminant))/2
 sub calculate($time, $distance) {
 	my $sqrt_discriminant = sqrt($time * $time - 4 * $distance);
-	# if the x intercepts are rational, there are no wins at either intercept
-	# because the distance traveled is equal to the given distance.
-	# The number of discrete steps including both intercepts is high - low + 1
-	# so subtracting two is high - low - 1.
-	# (time + sqrt(discriminant))/2 - (time - sqrt(discriminant))/2  - 1 = sqrt(discriminant) - 1
-	if $sqrt_discriminant% 1.0 == 0.0 {
+	# if the x intercepts are rational, f(high) = 0 and f(low) = 0 and are not 
+	# wins, but each integer x between them has f(x) > 0. The number of 
+	# discrete steps where f(x) > 0 is high - low - 1.
+	# (time + sqrt(discriminant))/2 - (time - sqrt(discriminant))/2  - 1 
+	#	= sqrt(discriminant) - 1
+	if $sqrt_discriminant % 1.0 == 0.0 {
 		return $sqrt_discriminant - 1;
 	}
-	# if the x intercepts are not rational, floor(high) and ceil(low) are 
-	# both greater than 0. The number of discrete steps between and including 
-	# them is floor(x_high) - ceil(x_low) + 1
+	# if the x intercepts are not rational, f(floor(high)) > 0 and 
+	# f(ceil(low)) > 0. The number of discrete steps between and including 
+	# them is floor(high) - ceil(low) + 1
 	else {
 		my $x_high = ($time + $sqrt_discriminant)/2;
 		my $x_low = ($time - $sqrt_discriminant)/2;
