@@ -6,8 +6,9 @@ use Day02;
 use Day03;
 use Day04;
 use Day05;
+use Day06;
 
-constant $max_day = 5;
+constant $max_day = 6;
 
 # This will not generate usage on error in Windows, but anyway...
 sub MAIN(	
@@ -41,6 +42,7 @@ sub MAIN(
 		when 3 { day03(@file_lines) }
 		when 4 { day04(@file_lines) }
 		when 5 { day05(@file_lines) }
+		when 6 { day06(@file_lines) }
 		default { say "Day $day not available" }
 	}
 	my $elapsed = (now - $start) * 1000;
