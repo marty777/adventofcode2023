@@ -11,8 +11,7 @@ sub indexInCharArray(@array,$char) {
 	die "Unable to find character $char in array @array";
 }
 
-# Return relative order of @hand1 and @hand2. If $part2 == True, use rules for
-# part 2
+# Return relative order of @hand1 and @hand2.
 sub compare(@hand1, @hand2, @card_order) {
 	my $hand1_type = @card_order[0] eq 'J' ?? prime_order2(@hand1) !! prime_order(@hand1);
 	my $hand2_type = @card_order[0] eq 'J' ?? prime_order2(@hand2) !! prime_order(@hand2);
