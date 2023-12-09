@@ -8,7 +8,6 @@ sub day08(@lines) is export {
 	my %nodes;
 	my @lrs = @lines[0].split(""):skip-empty;
 	loop (my $i = 2; $i < @lines.elems; $i++) {
-		my @split1 = @lines[$i].split(" = "):skip-empty;
 		my $node = @lines[$i].substr(0,3);
 		my $left = @lines[$i].substr(7,3);
 		my $right = @lines[$i].substr(12,3);
@@ -42,7 +41,7 @@ sub day08(@lines) is export {
 			@As.push($key);
 		}
 	}
-	# For each A node, determine the period of it's cycle, assumed to be
+	# For each A node, determine the period of its cycle, assumed to be
 	# the first Z node it reaches.
 	my @periods;
 	for @As -> $a {
