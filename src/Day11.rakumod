@@ -23,7 +23,7 @@ class Grid {
 			}
 		}
 		# Find empty rows and columns		
-		loop (my $y = 0; $y < $start_height; $y++) {
+		loop ($y = 0; $y < $start_height; $y++) {
 			my $empty = True;
 			loop (my $x = 0; $x < $start_width; $x++) {
 				if @start_grid[$x + $y*$start_width] eq '#' {
@@ -50,16 +50,16 @@ class Grid {
 
 		my %store = %();
 		
-		loop (my $y = 0; $y < $start_height; $y++) {
+		loop ($y = 0; $y < $start_height; $y++) {
+			my $empty_rows = 0;
+			for %rows.keys -> $key {
+				if $key < $y {
+					$empty_rows += 1;
+				}
+			}
 			loop (my $x = 0; $x < $start_width; $x++) {
 				if @start_grid[$x + $y*$start_height] eq '#' {
-					my $empty_rows = 0;
-					my $empty_cols = 0;
-					for %rows.keys -> $key {
-						if $key < $y {
-							$empty_rows += 1;
-						}
-					}
+					my $empty_cols = 0;		
 					for %cols.keys -> $key {
 						if $key < $x {
 							$empty_cols += 1;
