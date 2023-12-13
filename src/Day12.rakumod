@@ -113,7 +113,7 @@ sub recurse(@numbers, @assigned, @pattern, %cache) {
 		}
 	}
 	my $curr_element_index = @assigned.elems;
-	# The position of previous element, plus it's length plus one space to the left
+	# The position of previous element plus its length plus one space to the left
 	my $curr_element_minimum_index = 0;
 	if ($curr_element_index > 0) {
 		$curr_element_minimum_index = @assigned[$curr_element_index - 1] + @numbers[$curr_element_index - 1] + 1;
@@ -124,7 +124,7 @@ sub recurse(@numbers, @assigned, @pattern, %cache) {
 		return %cache{$curr_key};
 	}
 	
-	# Minimum space required on the righ is each remaining element size, plus one space to left for each
+	# Minimum space required on the right is each remaining element size plus one space to the left for each
 	my $minimum_space_for_remaining_elements = 0;
 	loop (my $i = $curr_element_index + 1; $i < @numbers.elems; $i++) {
 		$minimum_space_for_remaining_elements += 1 + @numbers[$i];
