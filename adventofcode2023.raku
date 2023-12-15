@@ -15,8 +15,7 @@ use Day11;
 use Day12;
 use Day13;
 use Day14;
-
-constant $max_day = 14;
+use Day15;
 
 # This will not generate usage on error in Windows, but anyway...
 sub MAIN(	
@@ -24,10 +23,6 @@ sub MAIN(
 		Str 	$file, 		#= the input file to run
 		) {
 	
-	if $day <= 0 or $day > $max_day {
-		say "There is no implementation for puzzle day $day";
-		return;
-	}
 	if not $file.IO.f {
 		say "Could not find input file $file";
 		return;
@@ -59,7 +54,8 @@ sub MAIN(
 		when 12 { day12(@file_lines) }
 		when 13 { day13(@file_lines) }
 		when 14 { day14(@file_lines) }
-		default { say "Day $day not available" }
+		when 15 { day15(@file_lines) }
+		default { say "There is no implementation for puzzle day $day" }
 	}
 	my $elapsed = (now - $start) * 1000;
 	say "\nElapsed: $elapsed ms";
