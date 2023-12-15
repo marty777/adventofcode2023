@@ -1,9 +1,6 @@
 unit module Day15;
 use util;
 
-# I don't recommend using this solution. Raku does *not* like deleting elements from a list and while
-# the correct answer will be reached you may see a lot of warnings during execution.
-
 sub day15(@lines) is export {
 	my $part1 = 0;
 	my $part2 = 0;
@@ -11,7 +8,7 @@ sub day15(@lines) is export {
 	my %boxes;
 	loop (my $box_index = 0; $box_index < 256; $box_index++) {
 		my @box;
-		%boxes.push(@box);
+		%boxes{$box_index} = @box;
 	}
 	for @lines -> $line {
 		my @elements = $line.split(","):skip-empty;
@@ -50,14 +47,8 @@ sub day15(@lines) is export {
 			if $remove {
 				loop ($i = 0; $i < %boxes{$box_hash}.elems; $i++) {
 					if %boxes{$box_hash}[$i][0] eq $label {
-						if ($i == 0 && %boxes{$box_hash}.elems == 1) {
-							%boxes{$box_hash} = [];
-						}
-						else {
-							my @box = %boxes{$box_hash}.clone;
-							@box.splice($i,1);
-							%boxes{$box_hash} = @box;
-						}
+						%boxes{$box_hash}.splice($i,1);
+						last;
 					}
 				}
 			}
@@ -78,7 +69,6 @@ sub day15(@lines) is export {
 	}
 	loop (my $i = 0; $i < 256; $i++ ) {
 		loop (my $j = 0; $j < %boxes{$i}.elems; $j++) {
-			# I'm tired of fighting Raku's array deletion so...
 			if %boxes{$i}[$j].elems > 1 {
 				$part2 += ($i + 1) * ($j + 1) * %boxes{$i}[$j][1];
 			}
