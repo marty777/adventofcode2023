@@ -16,6 +16,7 @@ use Day12;
 use Day13;
 use Day14;
 use Day15;
+use Day16;
 
 # This will not generate usage on error in Windows, but anyway...
 sub MAIN(	
@@ -55,6 +56,7 @@ sub MAIN(
 		when 13 { day13(@file_lines) }
 		when 14 { day14(@file_lines) }
 		when 15 { day15(@file_lines) }
+		when 16 { day16(@file_lines) }
 		default { say "There is no implementation for puzzle day $day" }
 	}
 	my $elapsed = (now - $start) * 1000;
