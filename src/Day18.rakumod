@@ -37,6 +37,7 @@ sub shoelace(@digs) {
 		
 	}
 	$twice_area += @vertices[@vertices.elems - 1].x * @vertices[0].y - @vertices[@vertices.elems - 1].y * @vertices[0].x;
+	# I still can't figure out the reason why I need to add 1, but it works
 	return $twice_area/2 + $perimeter/2 + 1;
 }
 
