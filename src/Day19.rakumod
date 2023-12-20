@@ -124,56 +124,44 @@ class Part {
 	}
 }
 
-# I suspect this would work with just min,max values, but I found this 
-# conceptually easier to deal with and it works. Good enough.
 class Range {
 	has %.vals;
+	has Int $.min is rw;
+	has Int $.max is rw;
 	multi method new() {
-		my %vals;
-		loop (my $i = 1; $i <= 4000; $i++) {
-			%vals{$i} = True;
-		} 
-		self.bless(vals => %vals);
+		self.bless(min => 1, max => 4000);
 	}
 	multi method new(Range $range) {
-		my %vals;
-		loop (my $i = 1; $i <= 4000; $i++) {
-			if $range.vals{$i}:exists {
-				%vals{$i} = True;
-			}
-		} 
-		self.bless(vals => %vals);
+		self.bless(min => $range.min, max => $range.max);
 	}
 	method set(WorkflowConditionType $type, Bool $inverse, Int $amt) {
 		given $type {
 			when GT {
 				# set not GT (i.e LTE)
 				if $inverse {
-					loop (my $i = $amt + 1; $i <= 4000; $i++ ) {
-						if self.vals{$i}:exists {  self.vals{$i}:delete; }
-					}
+					self.max = $amt;
 				}
 				else {
-					loop (my $i = $amt; $i >= 1; $i-- ) {
-						if self.vals{$i}:exists {  self.vals{$i}:delete; }
-					}
+					self.min = $amt + 1;
 				}
 			}
 			when LT {
 				# set not LT (i.e. GTE)
 				if $inverse {
-					loop (my $i = $amt - 1; $i >= 1; $i-- ) {
-						if self.vals{$i}:exists {  self.vals{$i}:delete; }
-					}
+					self.min = $amt;
 				}
 				else {
-					loop (my $i = $amt; $i <= 4000; $i++ )  {
-						if self.vals{$i}:exists {  self.vals{$i}:delete; }
-					}
+					self.max = $amt - 1;
 				}
 			}
 			default { return; }
 		}
+	}
+	method count() {
+		if self.max < self.min {
+			return 0;
+		}
+		return self.max - self.min + 1
 	}
 }
 
@@ -199,11 +187,11 @@ class RangeGroup {
 	}
 
 	method combinations() {
-		return self.x.vals.elems * self.m.vals.elems * self.a.vals.elems * self.s.vals.elems;
+		return self.x.count() * self.m.count() * self.a.count() * self.s.count();
 	}
 
 	method print() {
-		say "x: " ~ self.x.vals.elems ~ "\tm:" ~ self.m.vals.elems ~ "\tm:" ~ self.a.vals.elems ~ "\ts:" ~ self.s.vals.elems ~ "\ttotal:" ~ self.combinations();
+		say "x: " ~ self.x.count() ~ "\tm:" ~ self.m.count() ~ "\tm:" ~ self.a.count() ~ "\ts:" ~ self.s.count() ~ "\ttotal:" ~ self.combinations();
 	}
 }
 
