@@ -125,9 +125,9 @@ class Part {
 }
 
 class Range {
-	has %.vals;
 	has Int $.min is rw;
 	has Int $.max is rw;
+
 	multi method new() {
 		self.bless(min => 1, max => 4000);
 	}
