@@ -132,13 +132,13 @@ sub analyse_rx(@modules, %modulenames) {
 			}
 		}
 	}
-	# find the cycle lengths for each module that signals rx
+	# find the cycle lengths for each module that signals the parent of rx
 	my @periods;
 	for @parent_signalers -> $modulename {
 		reset_modules(@modules);
 		my $press_count = 1;
 		while True {
-			my $result = pressButton(@modules, %modulenames, $modulename);
+			my $result = press_button(@modules, %modulenames, $modulename);
 			if $result[2] == True {
 				@periods.push($press_count);
 				last;
@@ -160,12 +160,9 @@ sub reset_modules(@modules) {
 	}
 }
 
-sub pressButton(@modules, %modulenames, $monitor_module_name) {
+sub press_button(@modules, %modulenames, $monitor_module_name) {
 	my $lowPulses = 0;
 	my $highPulses = 0;
-
-	my $outputLowPulses = 0;
-	my $outputHighPulses = 0;
 
 	my $monitor_module_high_pulse = False;
 
@@ -186,22 +183,13 @@ sub pressButton(@modules, %modulenames, $monitor_module_name) {
 			else {
 				$lowPulses += 1;
 			}
-			if $pulse.dest eq 'output' {
-				if $pulse.state {
-					$outputHighPulses += 1;
-				}
-				else {
-					$outputLowPulses += 1;
+			if %modulenames{$pulse.dest}:exists {
+			my @result_pulses = @modules[%modulenames{$pulse.dest}].recieve($pulse);
+				for @result_pulses -> $result_pulse {
+					@frontier_next.push($result_pulse);
 				}
 			}
-			else {
-				if %modulenames{$pulse.dest}:exists {
-				my @result_pulses = @modules[%modulenames{$pulse.dest}].recieve($pulse);
-					for @result_pulses -> $result_pulse {
-						@frontier_next.push($result_pulse);
-					}
-				}
-			}
+			
 		}
 	}
 	return [$lowPulses, $highPulses, $monitor_module_high_pulse];
@@ -226,7 +214,7 @@ sub day20(@lines) is export {
 	my $lowPulses = 0;
 	my $highPulses = 0;
 	loop (my $i = 0; $i < 1000; $i++) {
-		my $result = pressButton(@modules, %modulenames, "");
+		my $result = press_button(@modules, %modulenames, "");
 		$lowPulses += $result[0];
 		$highPulses += $result[1];
 	}
